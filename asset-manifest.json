@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/medCalculator/static/css/main.073c9b0a.css",
+    "main.js": "/medCalculator/static/js/main.fe6eb976.js",
+    "static/js/787.a2f5a2af.chunk.js": "/medCalculator/static/js/787.a2f5a2af.chunk.js",
+    "index.html": "/medCalculator/index.html",
+    "main.073c9b0a.css.map": "/medCalculator/static/css/main.073c9b0a.css.map",
+    "main.fe6eb976.js.map": "/medCalculator/static/js/main.fe6eb976.js.map",
+    "787.a2f5a2af.chunk.js.map": "/medCalculator/static/js/787.a2f5a2af.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.fe6eb976.js"
+  ]
+}

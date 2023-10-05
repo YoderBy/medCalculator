@@ -1,16 +1,42 @@
 import {
-  VStack, HStack, NumberInputField, Input, Text, useColorMode, Button, SlideFade, Fade, Flex, Box, NumberInput
+  VStack, HStack, NumberInputField, Input, Text, useColorMode, Button, SlideFade, Fade, Flex, Box, NumberInput, MenuButton, Menu, Select
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import CalculateFinalGrade, { FinalScoreWithAndWithoutMor, Grades } from "../utils/CalculateFinalGrade";
 import UnivercityNameChanger from "../utils/UnivercityNameChanger";
 import calculateRequiredGradesToPass from "../utils/calculateRequiredGradesToPass";
 import roundTwoDigits from "../utils/roundTwoDigits";
-
 export const RequiredGrades = {
-  HebrewUnivercityScore: { WithMorScore: 26.183, WithoutMoreScore: 25.350 },
-  TelAvivUnivercityScore: { WithMorScore: 744.54, WithoutMoreScore: 726.58 },
-  TechnionScore: { WithMorScore: 202, WithoutMoreScore: 91.925 },
+  HebrewUnivercityScore: 
+{ WithMorScore: 26.183, WithoutMoreScore: 25.350 },
+
+  
+  TelAvivUnivercityScore:
+    { WithMorScore: 744.54, WithoutMoreScore: 726.58 },
+    
+  
+  TechnionScore: {
+     WithMorScore: 202, WithoutMoreScore: 91.925 
+    
+  }
+} 
+
+export const RequiredGrades1 = {
+  HebrewUnivercityScore: {
+    2023: { WithMorScore: 26.183, WithoutMoreScore: 25.350 },
+    2022: { WithMorScore: 21.183, WithoutMoreScore: 24.350 },
+    2021: { WithMorScore: 23.183, WithoutMoreScore: 26.350 }
+  },
+  TelAvivUnivercityScore: {
+    2023: { WithMorScore: 744.54, WithoutMoreScore: 726.58 },
+    2022: { WithMorScore: 724.54, WithoutMoreScore: 721.58 },
+    2021: { WithMorScore: 743.54, WithoutMoreScore: 734.58 }
+  },
+  TechnionScore: {
+    2023: { WithMorScore: 202, WithoutMoreScore: 91.925 },
+    2022: { WithMorScore: 204, WithoutMoreScore: 93.925 },
+    2021: { WithMorScore: 206, WithoutMoreScore: 97.925 }
+  }
 };
 
 interface Props {
@@ -22,8 +48,11 @@ const FinalGradeCalc: React.FC<Props> = ({ Grades, setGrades }) => {
   const { colorMode } = useColorMode();
   const isDarkMode = colorMode === "dark";
 
-  const getRequiredGrade = (univercity: string) => {
-    switch (univercity) {
+
+
+  const getRequiredGrade = (university: string)=> {
+    // Ensuring that "key" is used as a string index
+    switch (university) {
       case 'tel aviv':
         return RequiredGrades.TelAvivUnivercityScore;
       case 'heb':
@@ -33,7 +62,8 @@ const FinalGradeCalc: React.FC<Props> = ({ Grades, setGrades }) => {
       default:
         return RequiredGrades.TelAvivUnivercityScore;
     }
-  }
+  };
+  
 const sortMin = (string: string) => {
   switch(string){
     case 'Bagrut': return 80
@@ -52,7 +82,20 @@ const sortMax = (string: string) => {
   return 0;
 }
   const FinalGrades: FinalScoreWithAndWithoutMor = CalculateFinalGrade(Grades);
-  const RequiredFinalGrade = getRequiredGrade(Grades.Univercity);
+  //const [RequiredFinalGrad1e, setRequiredFinalGrade] = useState( 
+  const RequiredFinalGrade =  getRequiredGrade(Grades.Univercity);
+
+  // // const onSelect = (year:number)=>{
+  // //   switch(year){
+  // //     case 2023:
+  // //       setRequiredFinalGrade(getRequiredGrade(Grades.Univercity))
+  // //     case 2022:
+  // //       setRequiredFinalGrade(getRequiredGrade(Grades.Univercity))
+  // //     case 2021:
+  // //       setRequiredFinalGrade(getRequiredGrade(Grades.Univercity))
+          
+  // //   }
+  // }
   const handleInputChange = (value: string, key: string) => {
     const newGrades = { ...Grades, [key]: parseFloat(value) };
     setGrades(newGrades);
@@ -60,6 +103,21 @@ const sortMax = (string: string) => {
 
   return (
     <Flex direction="column" align="center" justify="center" p={4}>
+      <HStack dir="rtl">
+      <Text dir="rtl">
+        בחר שנה:
+      </Text>
+           <Select 
+             w = '150px'
+
+            padding={'10px'}
+            dir='rtl' 
+            onChange={(e) => console.log(e)}
+            defaultValue="סכם בשנת:">
+                <option  value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+        </Select></HStack>
       <VStack
         w={{ base: '90%', md: '500px' }}
         alignItems={'flex-start'}
@@ -96,6 +154,7 @@ const sortMax = (string: string) => {
           );
         })}
       </VStack>
+ 
       <Box
         w={{ base: '90%', md: '500px' }}
         mt={5}
@@ -126,6 +185,7 @@ const sortMax = (string: string) => {
             <Text dir='rtl' fontSize={{ base: 'sm', md: 'md' }} >
               סכם סופי(עם מור): {FinalGrades.WithMorScore}
             </Text>
+
           </VStack>
 
             <VStack display={FinalGrades.WithoutMoreScore < RequiredFinalGrade.WithoutMoreScore ? '' : 'none'}

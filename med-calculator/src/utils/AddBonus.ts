@@ -24,13 +24,13 @@ const AddBonus = (row: TableRow, bonusCriteria: string) => {
                 
                 //console.log( row.class + " "+ row.unit +"  " +bonusCriteria);
                 if (row.class === 'מתמטיקה' && row.unit === 5) {
-                    return 35;
+                    return 30;
                 }
                 if ((row.class === 'מתמטיקה' || row.class === 'אנגלית') && row.unit === 4) {
                     return 10;
                 }
                 if (bonusClass.includes(row.class) && row.unit === 5) {
-                    return 30;
+                    return 25;
                 }
                 if (row.unit === 5) {
                     return 20;

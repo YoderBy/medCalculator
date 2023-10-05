@@ -6,7 +6,7 @@ const AddBonus = (row: TableRow, bonusCriteria: string) => {
             if (row.unit) {
                 //console.log( row.class + " "+ row.unit +"  "+ bonusCriteria);
                 if (row.class === 'מתמטיקה' && row.unit === 5) {
-                    return 30;
+                    return 35;
                 }
                 if ((row.class === 'מתמטיקה' || row.class === 'אנגלית') && row.unit === 4) {
                     return 12.5;

@@ -103,6 +103,8 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
             >
                 {showTable ? 'הסתר' : 'הצג'} מחשבון בגרויות
             </Button>
+
+            <SlideFade in={showTable} offsetY="220px">
             <Heading
                 dir="rtl"
 
@@ -116,8 +118,9 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                     {Average}
                 </Text>
             </Heading>
-            <SlideFade in={showTable} offsetY="220px">
+
                 <Table 
+                    maxWidth={'100%'}
                     display = {display? '' : 'none'}
                     color={isDarkMode ? 'white' : '#003366'}
                     border="1px solid"
@@ -125,10 +128,10 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                     dir="rtl">
                     <Thead>
                         <Tr>
-                            <Th>מקצוע</Th>
-                            <Th>יחידות</Th>
-                            <Th>ציון</Th>
-                            <Th>בונוס</Th>
+                            <Th  fontSize={'xs'}>מקצוע</Th>
+                            <Th >יחידות</Th>
+                            <Th>ציון בגרות</Th>
+                            <Th >בונוס</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -137,8 +140,9 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                                 <Tr backgroundColor={redRows.includes(row.id) ? (isDarkMode ? '#663333' : '#FFEAEA') : (isDarkMode ? 'gray.800' : 'white')} key={row.id}>
                                     <Th>{row.class}</Th>
                                     <Th >
-                                        <NumberInput  w={{base: '76px', md: 'auto'}}
-                                            defaultValue={row.unit}
+                                        <NumberInput
+                                        
+                                        defaultValue={row.unit}
                                             min={2}
                                             max={10}
                                             onChange={(valueString) => {
@@ -148,11 +152,13 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                                             bg={isDarkMode ? 'gray.600' : 'gray.50'}
                                             color={isDarkMode ? 'gray.200' : 'black'}
                                         >
-                                            <NumberInputField />
+                                            <NumberInputField 
+                                            h = {'100%'} fontSize={'s'} textAlign = 'center' padding={'1px'} />
                                         </NumberInput>
                                     </Th>
-                                    <Th>
-                                        <NumberInput  w={{base: '76px', md: 'auto'}}
+                                    <Th w = '300px'>
+                                        <NumberInput  
+                                           
                                             defaultValue={row.grade}
                                             min={55}
                                             max={100}
@@ -163,7 +169,8 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                                             bg={isDarkMode ? 'gray.600' : 'gray.50'}
                                             color={isDarkMode ? 'gray.200' : 'black'}
                                         >
-                                            <NumberInputField />
+                                            <NumberInputField h = {'100%'} fontSize={'s'} textAlign = 'center' padding={'1px'} />
+                                        
                                         </NumberInput>
                                     </Th>
                                     <Th>{AddBonus(row, bonusCriteria)}</Th>
@@ -174,9 +181,12 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                         {
                             BonusRows.map(row =>
                                 <Tr backgroundColor={redRows.includes(row.id) ? (isDarkMode ? '#663333' : '#FFEAEA') : (isDarkMode ? 'gray.800' : 'white')} key={row.id}>
-                                    <Th><Text textColor={'black'}><Input onChange={(e) => { handleChange(row.id, 'class', e.target.value) }} defaultValue={row.class}></Input></Text></Th>
-                                    <Th width={'50px'}>
-                                        <NumberInput  w={{base: '76px', md: 'auto'}}
+                                    <Th>
+                                        <Input bg={"whiteAlpha.400"} h = {'100%'} fontSize={'s'} textAlign = 'center' padding={'1px'}    onChange={(e) => { handleChange(row.id, 'class', e.target.value) }} defaultValue={row.class}></Input></Th>
+                                    <Th >
+                                        <NumberInput  
+                                            
+                                            w={{base: 'auto', md: 'auto'}}
                                             defaultValue={row.unit}
                                             min={2}
                                             max={10}
@@ -186,11 +196,11 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                                             }}
                                             bg={isDarkMode ? 'gray.600' : 'white'}
                                             color={isDarkMode ? 'gray.200' : 'black'}>
-                                            <NumberInputField />
+                                            <NumberInputField h = {'100%'} fontSize={'s'} textAlign = 'center' padding={'1px'} />
                                         </NumberInput>
                                     </Th>
                                     <Th>
-                                        <NumberInput  w={{base: '76px', md: 'auto'}}
+                                        <NumberInput  w={{base: 'auto', md: 'auto'}}
                                             defaultValue={row.grade}
                                             min={55}
                                             max={100}
@@ -202,7 +212,7 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                                             bg={isDarkMode ? 'gray.600' : 'white'}
                                             color={isDarkMode ? 'gray.200' : 'black'}
                                         >
-                                            <NumberInputField />
+                                            <NumberInputField  h = {'100%'} fontSize={'s'} textAlign = 'center' padding={'1px'}  />
                                         </NumberInput>
                                     </Th>
                                     <Th>{AddBonus(row, bonusCriteria)}</Th>

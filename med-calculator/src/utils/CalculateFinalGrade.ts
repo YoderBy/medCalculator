@@ -3,6 +3,7 @@ export interface FinalScoreWithAndWithoutMor {
     WithMorScore: number,
     WithoutMoreScore: number
 }
+
 export interface FinalGrades {
     HebrewUnivercityScore: FinalScoreWithAndWithoutMor,
     TelAvivUnivercityScore: FinalScoreWithAndWithoutMor,
@@ -19,32 +20,61 @@ export interface Grades {
     Bagrut: number,
     MorScore: number
 }
+export const CalculationVariable = {
+    TauFinalVariable: 0.3148421445,
+    TauMorVariable:  0.3722744907,
+    TauInterfaceVariable: 432.0584815,
+    TauPsychVariable: 0.71416463,
+    TauBagrutVariable: 2.87103659,
+
+    HebFinalVariable: 0.25,
+    HebMorVariable:  0.75 *0.0261 ,
+    HebInterfaceVariable: 20.6791*0.75,
+    HebPsychVariable:  0.032073,
+    HebBagrutVariable: 0.39630
+}
 const CalculateFinalGrade = (Grades: Grades) => {
 
     const calculateFinalGradeHebrew = (Grades: Grades) => {
-        const BagrutCalcHebrew = 3.9630 * Grades.Bagrut * 0.1 - 20.0621;
-        const PsychHebrewUnivercity = 0.032073 * Grades.Psych + 0.3672;
-        const WeightedHebrewScoreBeforeMor = BagrutCalcHebrew * 0.3 + PsychHebrewUnivercity * 0.7;
-        const FinalHebrewScoreBeforeMor = Math.floor((1.2235 * WeightedHebrewScoreBeforeMor - 4.4598 + 0.0005) * 1000) / 1000;
-        const FinalHebrewScoreWithMor = 0.75 * (Grades.MorScore*0.0261 + 20.6791) + 0.25 * FinalHebrewScoreBeforeMor
+
+        //f = (1.2235 *((0.39630 *b - 20.0621;) * 0.3 + ( 0.032073 * p + 0.3672) * 0.7) - 4.4598 + 0.0005) 
+        // f = -11.5086 + 0.145462 b +  p0.0274689
+        // b = (f + 11.5086 - 0.0274689p) / 0.145462
+        // p = (f + 11.5086 - 0.145462 b) / 0.0274689
+        const BagrutCalcHebrew = 
+        0.39630 * Grades.Bagrut - 20.0621;
+        const PsychHebrewUnivercity = 
+        0.032073 * Grades.Psych + 0.3672;
+        const WeightedHebrewScoreBeforeMor =
+         BagrutCalcHebrew * 0.3 + PsychHebrewUnivercity * 0.7;
+        const FinalHebrewScoreBeforeMor =
+         Math.floor((1.2235 * WeightedHebrewScoreBeforeMor - 4.4598 + 0.0005) * 1000) / 1000;
+        const FinalHebrewScoreWithMor =
+         0.75 * (Grades.MorScore * 0.0261 + 20.6791) +
+          0.25 * FinalHebrewScoreBeforeMor
         const FinalHebrew: FinalScoreWithAndWithoutMor =
-            { WithMorScore: roundTwoDigits(FinalHebrewScoreWithMor), WithoutMoreScore: roundTwoDigits(FinalHebrewScoreBeforeMor) }
+            { WithMorScore: roundTwoDigits(FinalHebrewScoreWithMor), 
+            WithoutMoreScore: roundTwoDigits(FinalHebrewScoreBeforeMor) }
         return FinalHebrew// final score
     }
 
     const calculateFinalGradeTechnion = (Grades: Grades) => {
         const FinalTechnion: FinalScoreWithAndWithoutMor =
-            {WithoutMoreScore: roundTwoDigits(Grades.Bagrut * 0.5 + 0.075 * Grades.Psych - 19),
-            WithMorScore: Grades.MorScore};
+        {
+            WithoutMoreScore: roundTwoDigits(Grades.Bagrut * 0.5 + 0.075 * Grades.Psych - 19),
+            WithMorScore: Grades.MorScore
+        };
         return FinalTechnion;
 
     }
 
     const calculateFinalGradeTelAviv = (Grades: Grades) => {
-        const WeightedTelAvivScoreBeforeMor = Grades.Psych * 0.71416463 + Grades.Bagrut * 2.87103659 - 124.21018293
+        // f = 
+        const WeightedTelAvivScoreBeforeMor = Grades.Psych * 0.71416463 + 
+        Grades.Bagrut * 2.87103659 - 124.21018293
         const WeightedTelAvivScoreWithMor = WeightedTelAvivScoreBeforeMor * 0.3148421445 + Grades.MorScore * 0.3722744907 + 432.0584815
         const FinalTelAviv: FinalScoreWithAndWithoutMor =
-            { WithMorScore: roundTwoDigits(WeightedTelAvivScoreWithMor), WithoutMoreScore: roundTwoDigits(WeightedTelAvivScoreBeforeMor)};
+            { WithMorScore: roundTwoDigits(WeightedTelAvivScoreWithMor), WithoutMoreScore: roundTwoDigits(WeightedTelAvivScoreBeforeMor) };
         return FinalTelAviv;
     }
 
@@ -55,7 +85,7 @@ const CalculateFinalGrade = (Grades: Grades) => {
 
     }
     const ErrorScore: FinalScoreWithAndWithoutMor =
-            { WithMorScore: -1, WithoutMoreScore: -1};
+        { WithMorScore: -1, WithoutMoreScore: -1 };
     return ErrorScore;
 
 }

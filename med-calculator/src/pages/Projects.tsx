@@ -48,7 +48,7 @@ const Projects = () => {
           alignItems="center" 
           padding={5} 
         >
-          <Heading as="h1" size="2xl">מחשבון  עזר לקבלה לרפואה</Heading>
+          <Heading textAlign={'center'} as="h1" size="xl">מחשבון עזר לקבלה לרפואה</Heading>
           <Box
           transition="all 0.3s"
           _hover={{
@@ -71,6 +71,8 @@ const Projects = () => {
         <GradeTable InputRows={Bagruts} bonusCriteria={selectedUniversity}></GradeTable>
         <FinalGradeCalc setGrades={setGrades} Grades={Grades}></FinalGradeCalc>
       </VStack>
+      <Text dir='rtl' fontSize={'xs'}> יוסף בן יהודה | צרו קשר במייל yosefydb@gmail.com</Text>
+          
     </Flex>
   );
 

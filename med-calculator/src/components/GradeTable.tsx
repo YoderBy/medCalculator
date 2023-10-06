@@ -8,7 +8,8 @@ import Calculate from "../utils/Calculate";
 import { set } from "react-hook-form";
 import UnivercitySelector from "./UnivercitySelector";
 import UnivercityNameChanger from "../utils/UnivercityNameChanger";
-export const bonusClass = ['אנגלית', 'פיזיקה', 'כימיה', 'ביולוגיה', 'ספרות', 'היסטוריה', 'תנ"ך'];
+export const bonusClass =
+ ['אנגלית', 'פיזיקה','פיסיקה', 'כימיה', 'ביולוגיה', 'ספרות', 'היסטוריה', 'תנ"ך'];
 export const mustHaveClass = ['אנגלית', 'מתמטיקה', 'היסטוריה', 'עברית', 'אזרחות'];
 
 export interface TableRow {
@@ -120,7 +121,6 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
             </Heading>
 
                 <Table 
-                    maxWidth={'100%'}
                     display = {display? '' : 'none'}
                     color={isDarkMode ? 'white' : '#003366'}
                     border="1px solid"
@@ -139,9 +139,9 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                             rows.map(row =>
                                 <Tr backgroundColor={redRows.includes(row.id) ? (isDarkMode ? '#663333' : '#FFEAEA') : (isDarkMode ? 'gray.800' : 'white')} key={row.id}>
                                     <Th>{row.class}</Th>
-                                    <Th >
+                                    <Th  maxW = '120px'>
                                         <NumberInput
-                                        
+                                        maxW = '80px'
                                         defaultValue={row.unit}
                                             min={2}
                                             max={10}
@@ -152,13 +152,13 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                                             bg={isDarkMode ? 'gray.600' : 'gray.50'}
                                             color={isDarkMode ? 'gray.200' : 'black'}
                                         >
-                                            <NumberInputField 
+                                            <NumberInputField  
                                             h = {'100%'} fontSize={'s'} textAlign = 'center' padding={'1px'} />
                                         </NumberInput>
                                     </Th>
-                                    <Th w = '300px'>
+                                    <Th  minW = {{base: '', md: '150px'}}>
                                         <NumberInput  
-                                           
+                                           maxW = '80px'
                                             defaultValue={row.grade}
                                             min={55}
                                             max={100}
@@ -185,7 +185,7 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                                         <Input bg={"whiteAlpha.400"} h = {'100%'} fontSize={'s'} textAlign = 'center' padding={'1px'}    onChange={(e) => { handleChange(row.id, 'class', e.target.value) }} defaultValue={row.class}></Input></Th>
                                     <Th >
                                         <NumberInput  
-                                            
+                                            maxW = '80px'
                                             w={{base: 'auto', md: 'auto'}}
                                             defaultValue={row.unit}
                                             min={2}
@@ -201,6 +201,7 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
                                     </Th>
                                     <Th>
                                         <NumberInput  w={{base: 'auto', md: 'auto'}}
+                                        maxW = '80px'
                                             defaultValue={row.grade}
                                             min={55}
                                             max={100}

@@ -6,22 +6,41 @@ import CalculateFinalGrade, { FinalScoreWithAndWithoutMor, Grades } from "../uti
 import UnivercityNameChanger from "../utils/UnivercityNameChanger";
 import calculateRequiredGradesToPass from "../utils/calculateRequiredGradesToPass";
 import roundTwoDigits from "../utils/roundTwoDigits";
-export const RequiredGrades = {
-  HebrewUnivercityScore: 
-{ WithMorScore: 26.183, WithoutMoreScore: 25.350 },
 
-  
-  TelAvivUnivercityScore:
-    { WithMorScore: 744.54, WithoutMoreScore: 726.58 },
-    
-  
-  TechnionScore: {
-     WithMorScore: 202, WithoutMoreScore: 91.925 
-    
+interface Score {
+  WithMorScore: number;
+  WithoutMoreScore: number;
+}
+interface UniversityScores {
+  [year: string]: Score;
+}
+interface RequiredGrades {
+  HebrewUnivercityScore: UniversityScores;
+  TelAvivUnivercityScore: UniversityScores;
+  TechnionScore: UniversityScores;
+}
+
+
+
+
+export const getRequiredGrade = (university: string, year : number)=> {
+  const key = year.toString();
+  // Ensuring that "key" is used as a string index
+  switch (university) {
+    case 'tel aviv':
+      return RequiredGrades.TelAvivUnivercityScore[key];
+//{Grades[key as keyof Grades]}
+      case 'heb':
+      return RequiredGrades.HebrewUnivercityScore[key];
+    case 'tech':
+      return RequiredGrades.TechnionScore[key];
+    default:
+      return RequiredGrades.TelAvivUnivercityScore[key];
   }
-} 
+};
 
-export const RequiredGrades1 = {
+
+export const RequiredGrades: RequiredGrades = {
   HebrewUnivercityScore: {
     2023: { WithMorScore: 26.183, WithoutMoreScore: 25.350 },
     2022: { WithMorScore: 21.183, WithoutMoreScore: 24.350 },
@@ -38,6 +57,20 @@ export const RequiredGrades1 = {
     2021: { WithMorScore: 206, WithoutMoreScore: 97.925 }
   }
 };
+export const RequiredGrades1 = {
+  HebrewUnivercityScore: 
+{ WithMorScore: 26.183, WithoutMoreScore: 25.350 },
+
+  
+  TelAvivUnivercityScore:
+    { WithMorScore: 744.54, WithoutMoreScore: 726.58 },
+    
+  
+  TechnionScore: {
+     WithMorScore: 202, WithoutMoreScore: 91.925 
+    
+  }
+} 
 
 interface Props {
   Grades: Grades;
@@ -45,25 +78,12 @@ interface Props {
 }
 
 const FinalGradeCalc: React.FC<Props> = ({ Grades, setGrades }) => {
+  
   const { colorMode } = useColorMode();
   const isDarkMode = colorMode === "dark";
 
 
 
-  const getRequiredGrade = (university: string)=> {
-    // Ensuring that "key" is used as a string index
-    switch (university) {
-      case 'tel aviv':
-        return RequiredGrades.TelAvivUnivercityScore;
-      case 'heb':
-        return RequiredGrades.HebrewUnivercityScore;
-      case 'tech':
-        return RequiredGrades.TechnionScore;
-      default:
-        return RequiredGrades.TelAvivUnivercityScore;
-    }
-  };
-  
 const sortMin = (string: string) => {
   switch(string){
     case 'Bagrut': return 80
@@ -82,8 +102,8 @@ const sortMax = (string: string) => {
   return 0;
 }
   const FinalGrades: FinalScoreWithAndWithoutMor = CalculateFinalGrade(Grades);
-  //const [RequiredFinalGrad1e, setRequiredFinalGrade] = useState( 
-  const RequiredFinalGrade =  getRequiredGrade(Grades.Univercity);
+  const [yearToShow, setyearToShow] = useState(2023);
+  const RequiredFinalGrade =  getRequiredGrade(Grades.Univercity, yearToShow);
 
   // // const onSelect = (year:number)=>{
   // //   switch(year){
@@ -112,7 +132,7 @@ const sortMax = (string: string) => {
 
             padding={'10px'}
             dir='rtl' 
-            onChange={(e) => console.log(e)}
+            onChange={(e) =>setyearToShow(parseInt(e.target.value))}
             defaultValue="סכם בשנת:">
                 <option  value="2023">2023</option>
                 <option value="2022">2022</option>
@@ -191,15 +211,15 @@ const sortMax = (string: string) => {
             <VStack display={FinalGrades.WithoutMoreScore < RequiredFinalGrade.WithoutMoreScore ? '' : 'none'}
             >
               <Text dir = 'rtl' fontSize={{ base: 'sm', md: 'md' }}> על מנת לעבור סכם ראשוני יש לשפר אחד מהציונים:</Text>
-              <Text fontSize={{ base: 'sm', md: 'md' }}> פסיכומטרי : {calculateRequiredGradesToPass(Grades).requiredPsych}</Text>
-              <Text fontSize={{ base: 'sm', md: 'md' }}>ממוצע בגרות : {calculateRequiredGradesToPass(Grades).requiredBagrut}</Text>
+              <Text fontSize={{ base: 'sm', md: 'md' }}> פסיכומטרי : {calculateRequiredGradesToPass(Grades, yearToShow).requiredPsych}</Text>
+              <Text fontSize={{ base: 'sm', md: 'md' }}>ממוצע בגרות : {calculateRequiredGradesToPass(Grades, yearToShow).requiredBagrut}</Text>
             </VStack>
 
             <VStack display={FinalGrades.WithMorScore < RequiredFinalGrade.WithMorScore ? '' : 'none'}>
             <Text dir = 'rtl' fontSize={{ base: 'sm', md: 'md' }}> על מנת לעבור סכם קבלה יש לשפר אחד מהציונים:</Text>
               
-              <Text fontSize={{ base: 'sm', md: 'md' }}> סכם ראשוני : {roundTwoDigits(calculateRequiredGradesToPass(Grades).requiredFinal)}</Text>
-              <Text fontSize={{ base: 'sm', md: 'md' }}>מור : {Math.floor(calculateRequiredGradesToPass(Grades).requiredMor)}</Text>
+              <Text fontSize={{ base: 'sm', md: 'md' }}> סכם ראשוני : {roundTwoDigits(calculateRequiredGradesToPass(Grades, yearToShow).requiredFinal)}</Text>
+              <Text fontSize={{ base: 'sm', md: 'md' }}>מור : {Math.floor(calculateRequiredGradesToPass(Grades, yearToShow).requiredMor)}</Text>
             </VStack>
         </VStack>
 

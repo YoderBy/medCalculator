@@ -1,8 +1,16 @@
-import { RequiredGrades } from "../components/FinalGradeCalc";
+import { get } from "http";
+import { getRequiredGrade } from "../components/FinalGradeCalc";
 import CalculateFinalGrade, { CalculationVariable, Grades } from "./CalculateFinalGrade";
 import roundTwoDigits from "./roundTwoDigits";
 
-const calculateRequiredGradesToPass = (grades : Grades) => {
+const calculateRequiredGradesToPass = (grades : Grades, year: number) => {
+    
+    const RequiredGrades ={
+        TelAvivUnivercityScore:  getRequiredGrade('tel aviv', year),
+        HebrewUnivercityScore:  getRequiredGrade('heb', year),
+        TechnionScore:          getRequiredGrade('tech', year)
+    }
+
     let answer =  {requiredMor: 0, requiredFinal: 0, requiredPsych : 0, requiredBagrut: 0} ;
     const score = CalculateFinalGrade(grades);
     switch (grades.Univercity){

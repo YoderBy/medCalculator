@@ -47,9 +47,9 @@ const AddBonus = (row: TableRow, bonusCriteria: string) => {
                 }
                 if ((row.class === 'מתמטיקה' || row.class === 'אנגלית')
                 && row.unit === 4) {
-                    return 12.5;
+                    return 15;
                 }
-                if (bonusClass.includes(row.class) && row.unit === 5) {
+                if ((bonusClass.includes(row.class) || row.class === 'מדעי המחשב' || row.class === 'מחשבת ישראל') && row.unit === 5) {
                     return 25;
                 }
                 if (row.unit === 5) {

@@ -51,13 +51,11 @@ export const RequiredGrades: RequiredGrades = {
   },
   TelAvivUnivercityScore: {
     2023: { WithMorScore: 744.54, WithoutMoreScore: 726.58 },
-    2022: {
-      WithMorScore: 746.09
-      , WithoutMoreScore: 729.58
+    2022: {WithMorScore: 746.09, WithoutMoreScore: 729.58
     },
     2021: {
       WithMorScore: 746.41
-      , WithoutMoreScore: 734.58
+      , WithoutMoreScore: 733.17
     }
   },
   TechnionScore: {
@@ -189,38 +187,46 @@ const FinalGradeCalc: React.FC<Props> = ({ Grades, setGrades }) => {
             <Text dir='rtl' fontSize={{ base: 'sm', md: 'md' }}
               color={FinalGrades.WithoutMoreScore > RequiredFinalGrade.WithoutMoreScore ? "#28a745" : "#dc3545"}
             >
-              סכם ראשוני ל{UnivercityNameChanger(Grades.Univercity)}: {RequiredFinalGrade.WithoutMoreScore}
+              סכם ראשוני נדרש ל{UnivercityNameChanger(Grades.Univercity)}: {RequiredFinalGrade.WithoutMoreScore}
             </Text>
             <Text dir='rtl' fontSize={{ base: 'sm', md: 'md' }}
               color={FinalGrades.WithMorScore > RequiredFinalGrade.WithMorScore ? "#28a745" : "#dc3545"}
             >
-              סכם קבלה ל{UnivercityNameChanger(Grades.Univercity)}: {RequiredFinalGrade.WithMorScore}
+              סכם קבלה נדרש ל{UnivercityNameChanger(Grades.Univercity)}: {RequiredFinalGrade.WithMorScore}
             </Text>
           </HStack>
 
           <VStack>
             <Text dir='rtl' fontSize={{ base: 'sm', md: 'md' }} >
-              סכם ראשוני(ללא מור): {FinalGrades.WithoutMoreScore}
+               סכם ראשוני שחושב(ללא מור): {FinalGrades.WithoutMoreScore}
             </Text>
 
             <Text dir='rtl' fontSize={{ base: 'sm', md: 'md' }} >
-              סכם סופי(עם מור): {FinalGrades.WithMorScore}
+              סכם סופי שחושב(עם מור): {FinalGrades.WithMorScore}
             </Text>
 
           </VStack>
-
+          <VStack display={FinalGrades.WithoutMoreScore < RequiredFinalGrade.WithoutMoreScore && FinalGrades.WithMorScore < RequiredFinalGrade.WithMorScore ? '' : 'none'}
+                  alignItems={'flex-start'}
+                  spacing={{ base: 2, md: 4 }}
+                  bg={isDarkMode ? '#2C2C2C' : '#cce7ff'}
+                  p={5}
+                  borderRadius="md"
+                  boxShadow="lg">
+                    
           <VStack display={FinalGrades.WithoutMoreScore < RequiredFinalGrade.WithoutMoreScore ? '' : 'none'}
           >
-            <Text dir='rtl' fontSize={{ base: 'sm', md: 'md' }}> על מנת לעבור סכם ראשוני יש לשפר אחד מהציונים:</Text>
+          
+            <Text dir='rtl' fontSize={{ base: 'sm', md: 'md' }}> הנתונים שהוזנו לא מספיקים על מנת לעבור סכם ראשוני. האופציות לשיפור הן:</Text>
             <Text fontSize={{ base: 'sm', md: 'md' }}> פסיכומטרי : {calculateRequiredGradesToPass(Grades, yearToShow).requiredPsych}</Text>
             <Text fontSize={{ base: 'sm', md: 'md' }}>ממוצע בגרות : {calculateRequiredGradesToPass(Grades, yearToShow).requiredBagrut}</Text>
           </VStack>
 
           <VStack display={FinalGrades.WithMorScore < RequiredFinalGrade.WithMorScore ? '' : 'none'}>
-            <Text dir='rtl' fontSize={{ base: 'sm', md: 'md' }}> על מנת לעבור סכם קבלה יש לשפר אחד מהציונים:</Text>
-
+            <Text dir='rtl' fontSize={{ base: 'sm', md: 'md' }}>  הנתונים שהוזנו לא מספיקים על מנת לעבור סכם קבלה. האופציות לשיפור הן:</Text>
             <Text fontSize={{ base: 'sm', md: 'md' }}> סכם ראשוני : {roundTwoDigits(calculateRequiredGradesToPass(Grades, yearToShow).requiredFinal)}</Text>
             <Text fontSize={{ base: 'sm', md: 'md' }}>מור : {Math.floor(calculateRequiredGradesToPass(Grades, yearToShow).requiredMor)}</Text>
+          </VStack>
           </VStack>
         </VStack>
 

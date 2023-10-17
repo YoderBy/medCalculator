@@ -38,9 +38,22 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
 
     const Average = Calculate([...rows, ...BonusRows].filter(row => !redRows.includes(row.id)), bonusCriteria) || '';
     
-
+    useEffect(() => {
+        // Get the data from localStorage and update the state on component mount
+        const savedRows = localStorage.getItem('gradeRows');
+        const savedBonusRows = localStorage.getItem('bonusRows');
+        if(savedRows) {console.log(JSON.parse(savedRows))}
+        if(savedRows) {
+          setRows(JSON.parse(savedRows));
+        }
+        if(savedBonusRows) {
+          setBonusRows(JSON.parse(savedBonusRows));
+        }
+      
+      }, []);
 
     const handleChange = (id: number, field: string, value: number | string) => {
+
         const updateRow = (row: TableRow) => {
             if (row.id !== id) return row;
 
@@ -67,6 +80,9 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
             };
             setBonusRows(prev => [...prev, newRow]);
         }
+
+        localStorage.setItem('gradeRows', JSON.stringify(rows));
+        localStorage.setItem('bonusRows', JSON.stringify(BonusRows));
     };
     const [showTable, setShowTable] = useState(true);
     useEffect(() => {

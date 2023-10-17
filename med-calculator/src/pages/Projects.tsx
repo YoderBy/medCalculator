@@ -23,8 +23,8 @@ const Projects = () => {
 
   const ConstGrade: Grades = {
     Univercity: selectedUniversity,
-    Psych: 780,
-    Bagrut: 114.12,
+    Psych: 730,
+    Bagrut: 112.12,
     MorScore: 200
   };
 
@@ -49,6 +49,8 @@ const Projects = () => {
           padding={5} 
         >
           <Heading textAlign={'center'} as="h1" size="xl">מחשבון עזר לקבלה לרפואה</Heading>
+          
+      <Text dir='rtl' fontSize={'8px'}> יוסף בן יהודה | אשמח להצעות לשיפור. צרו קשר במייל yosefydb@gmail.com</Text>
           <Box
           transition="all 0.3s"
           _hover={{
@@ -71,7 +73,6 @@ const Projects = () => {
         <GradeTable InputRows={Bagruts} bonusCriteria={selectedUniversity}></GradeTable>
         <FinalGradeCalc setGrades={setGrades} Grades={Grades}></FinalGradeCalc>
       </VStack>
-      <Text dir='rtl' fontSize={'xs'}> יוסף בן יהודה | צרו קשר במייל yosefydb@gmail.com</Text>
           
     </Flex>
   );

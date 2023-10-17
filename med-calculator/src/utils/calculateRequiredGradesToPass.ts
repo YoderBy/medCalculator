@@ -34,9 +34,9 @@ const calculateRequiredGradesToPass = (grades : Grades, year: number) => {
             answer.requiredPsych =Math.floor(1+ (RequiredGrades.TelAvivUnivercityScore.WithoutMoreScore -
                 grades.Bagrut * 2.87103659 + 124.21018293)/0.71416463)
 
-            console.log(grades.Bagrut)
-            console.log(grades.Psych * 0.71416463 + 
-                grades.Bagrut * 2.87103659 - 124.21018293)
+            //console.log(grades.Bagrut)
+            //console.log(grades.Psych * 0.71416463 + 
+            //    grades.Bagrut * 2.87103659 - 124.21018293)
             
 
         }break;

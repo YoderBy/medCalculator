@@ -8,8 +8,8 @@ const ExcludeFromCalc = (row: TableRow, currentAverage: number | null, bonusCrit
         if (row.unit && currentAverage && row.grade) {
             const gain = row.grade + AddBonus(row, bonusCriteria);
             if (gain <= currentAverage) { 
-                console.log("the gain is " + gain + 'and the average is ' + currentAverage);
-                console.log('kick it');
+                //console.log("the gain is " + gain + 'and the average is ' + currentAverage);
+                //console.log('kick it');
                 return true 
             };
         }

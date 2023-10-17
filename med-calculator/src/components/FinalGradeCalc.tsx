@@ -111,12 +111,13 @@ const FinalGradeCalc: React.FC<Props> = ({ Grades, setGrades }) => {
     }
     return 0;
   }
+  
   const FinalGrades: FinalScoreWithAndWithoutMor = CalculateFinalGrade(Grades);
   const [yearToShow, setyearToShow] = useState(2023);
   const RequiredFinalGrade = getRequiredGrade(Grades.Univercity, yearToShow);
-
   const handleInputChange = (value: string, key: string) => {
-    const newGrades = { ...Grades, [key]: parseFloat(value) };
+    console.log(value);
+    const newGrades = { ...Grades, [key]: value };
     setGrades(newGrades);
   }
 
@@ -158,7 +159,7 @@ const FinalGradeCalc: React.FC<Props> = ({ Grades, setGrades }) => {
                 min={sortMin(key)}
                 max={sortMax(key)}
                 textAlign="center"
-                defaultValue={Grades[key as keyof Grades]}
+                value={Grades[key as keyof Grades]}
                 onChange={(value) => handleInputChange(value, key as string)}
                 placeholder={placeholder}
                 borderRadius="md"
@@ -168,7 +169,7 @@ const FinalGradeCalc: React.FC<Props> = ({ Grades, setGrades }) => {
               >
                 <NumberInputField textAlign='center' padding={'1px'} />
               </NumberInput>
-              <Text textAlign='right' fontSize="lg" color={isDarkMode ? 'white' : '#003366'}>:{label}</Text>
+              <Text  textAlign = 'center' fontSize="lg" color={isDarkMode ? 'white' : '#003366'}>:{label}</Text>
             </HStack>
           );
         })}
@@ -206,7 +207,7 @@ const FinalGradeCalc: React.FC<Props> = ({ Grades, setGrades }) => {
             </Text>
 
           </VStack>
-          <VStack display={FinalGrades.WithoutMoreScore < RequiredFinalGrade.WithoutMoreScore && FinalGrades.WithMorScore < RequiredFinalGrade.WithMorScore ? '' : 'none'}
+          <VStack display={FinalGrades.WithoutMoreScore < RequiredFinalGrade.WithoutMoreScore || FinalGrades.WithMorScore < RequiredFinalGrade.WithMorScore ? '' : 'none'}
                   alignItems={'flex-start'}
                   spacing={{ base: 2, md: 4 }}
                   bg={isDarkMode ? '#2C2C2C' : '#cce7ff'}

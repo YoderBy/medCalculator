@@ -21,10 +21,11 @@ export interface TableRow {
     isRed?: boolean;
 }
 interface Props {
+    SetAverage: (Average :number) =>void;
     InputRows: TableRow[];
     bonusCriteria: string;
 }
-const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
+const GradeTable = ({SetAverage, InputRows, bonusCriteria }: Props) => {
     const { colorMode } = useColorMode();
     const isDarkMode = colorMode === 'dark';
     const [display, setdisplay] = useState(true);
@@ -37,7 +38,7 @@ const GradeTable = ({ InputRows, bonusCriteria }: Props) => {
     }, [rows, BonusRows, initialAverage]);
 
     const Average = Calculate([...rows, ...BonusRows].filter(row => !redRows.includes(row.id)), bonusCriteria) || '';
-    
+    if (Average){SetAverage(Average);}
     useEffect(() => {
         // Get the data from localStorage and update the state on component mount
         const savedRows = localStorage.getItem('gradeRows');

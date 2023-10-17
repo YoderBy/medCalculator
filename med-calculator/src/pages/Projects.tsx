@@ -21,18 +21,21 @@ const Projects = () => {
 
   ];
 
+
+  const [Average, setAverage] = useState<number>(114.12);
+
   const ConstGrade: Grades = {
     Univercity: selectedUniversity,
-    Psych: 730,
-    Bagrut: 112.12,
+    Psych: 735,
+    Bagrut: Average,
     MorScore: 200
   };
 
   const [Grades, setGrades] = useState<Grades>(ConstGrade);
 
   useEffect(() => {
-    setGrades((prevGrades) => ({ ...prevGrades, Univercity: selectedUniversity }));
-  }, [selectedUniversity]);
+    setGrades((prevGrades) => ({ ...prevGrades, Bagrut: Average, Univercity: selectedUniversity }));
+  }, [selectedUniversity, Average]);
 
 
     return (
@@ -70,8 +73,8 @@ const Projects = () => {
             <option value="heb">העברית</option>
           </Select>
         </Box>
-        <GradeTable InputRows={Bagruts} bonusCriteria={selectedUniversity}></GradeTable>
-        <FinalGradeCalc setGrades={setGrades} Grades={Grades}></FinalGradeCalc>
+        <GradeTable SetAverage={setAverage}  InputRows={Bagruts} bonusCriteria={selectedUniversity}></GradeTable>
+        <FinalGradeCalc  setGrades={setGrades} Grades={Grades}></FinalGradeCalc>
       </VStack>
           
     </Flex>
